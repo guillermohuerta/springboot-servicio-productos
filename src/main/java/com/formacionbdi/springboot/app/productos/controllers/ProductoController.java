@@ -16,11 +16,11 @@ import com.formacionbdi.springboot.app.productos.models.service.IProductoService
 @RestController
 public class ProductoController {
 	
-	@Value("${server.port}")
-	private Integer port;
-	
 	@Autowired
 	private Environment env;
+	
+	@Value("${server.port}")
+	private Integer port;
 	
 	@Autowired
 	private IProductoService productoService;
