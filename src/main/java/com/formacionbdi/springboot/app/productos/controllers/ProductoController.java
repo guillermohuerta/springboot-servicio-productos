@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -59,8 +60,25 @@ public class ProductoController {
 	
 	@PostMapping("/crear")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Producto crear(@RequestBody Producto producto) throws InterruptedException {
+	public Producto crear(@RequestBody Producto producto){
 		return productoService.save(producto);
+	}
+	
+	@PutMapping("/editar/{id}")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Producto editar(@RequestBody Producto producto, @PathVariable Long id){
+		Producto productoDb = productoService.findById(id);
+		
+		productoDb.setNombre(producto.getNombre());
+		productoDb.setPrecio(producto.getPrecio());
+		
+		return productoService.save(productoDb);
+	}
+	
+	@DeleteMapping("/eliminar/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void eliminar(@PathVariable Long id){
+		productoService.deleteById(id);
 	}
 	
 }
